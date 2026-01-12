@@ -34,22 +34,10 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 
-const authRoutes = require("./routes/admin/authRoutes");
-const userRoutes = require("./routes/admin/userRoutes");
-const taskRoutes = require("./routes/admin/taskRoutes");
-const employeeRoutes = require("./routes/employee/employeeRoutes");
-const profileRoutes = require("./routes/profileRoutes");
-
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-
-app.use("/api/auth", authRoutes);
-app.use("/api/user", userRoutes);
-app.use("/api/task", taskRoutes);
-app.use("/api/employeeTask", employeeRoutes);
-app.use("/api/profile", profileRoutes);
 
 // test route
 app.get("/", (req, res) => {
