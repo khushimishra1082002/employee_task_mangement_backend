@@ -40,6 +40,8 @@ const registerController = async (req, res) => {
 
 // LOGIN
 const loginController = async (req, res) => {
+  console.log("jj");
+  
   try {
     const { email, password } = req.body;
 

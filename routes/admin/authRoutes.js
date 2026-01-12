@@ -21,10 +21,12 @@
 
 const express = require("express");
 const router = express.Router();
+const { loginController } = require("../../controller/authController");
+
+router.post("/login", loginController);
 
 router.get("/test", (req, res) => {
   res.send("Auth route working");
 });
 
 module.exports = router;
-
