@@ -3,7 +3,7 @@ const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const connectDB = require("../config/db");
 
-const registerController = async (req, res) => {
+const registerController = async (req, res) => {                                                 
   try {
     await connectDB();
     const { name, email, password, role } = req.body;

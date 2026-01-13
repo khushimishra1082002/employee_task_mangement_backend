@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-
 const {
   getAllUsersController,
   getSingleUser,
@@ -12,7 +11,7 @@ const {
 
 const authtoken = require("../../middleware/authMiddleware");
 const authorize = require("../../middleware/rolesMiddleware");
-const upload = require("../../middleware/multerMiddleware");
+const upload = require("../../middleware/upload");
 
 router.get("/singleUser/:id", authtoken,getSingleUser);
 router.get("/allUsers", authtoken, authorize(["admin"]), getAllUsersController);
