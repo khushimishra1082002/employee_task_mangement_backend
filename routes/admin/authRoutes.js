@@ -22,7 +22,7 @@
 const express = require("express");
 const router = express.Router();
 const { loginController } = require("../../controller/authController");
-const connectDB = require("../../config/db")
+const connectDB = require("../../config/db");
 
 router.post("/login", loginController);
 
@@ -38,27 +38,5 @@ router.get("/db-test", async (req, res) => {
     res.status(500).send("DB FAIL");
   }
 });
-
-router.post("/upload", upload.single("file"), (req, res) => {
-  res.json({
-    fileUrl: req.file.path, // 🔥 Cloudinary URL
-  });
-});
-
-app.get("/api/check-env", (req, res) => {
-  res.json({
-    cloud: !!process.env.CLOUD_NAME,
-    key: !!process.env.API_KEY,
-    secret: !!process.env.API_SECRET,
-  });
-});
-
-router.post("/test-upload", upload.single("file"), (req, res) => {
-  res.json({
-    success: true,
-    url: req.file.path,
-  });
-});
-
 
 module.exports = router;
