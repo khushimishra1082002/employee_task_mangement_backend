@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
+const connectDB = require("../config/db")
 
 const registerController = async (req, res) => {
   try {
@@ -43,6 +44,7 @@ const loginController = async (req, res) => {
   console.log("jj");
   
   try {
+    await connectDB(); 
     const { email, password } = req.body;
 
     if (!email || !password) {
