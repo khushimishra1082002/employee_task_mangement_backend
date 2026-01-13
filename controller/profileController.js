@@ -14,7 +14,7 @@ const getMyProfile = async (req, res) => {
 const updateMyProfile = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    const image = req.file ? req.file.filename : undefined; // filename only
+    const image = req.file ? req.file.path : undefined;
 
     const updateData = { name, email };
     if (image) updateData.image = image;
@@ -23,11 +23,9 @@ const updateMyProfile = async (req, res) => {
       updateData.password = await bcrypt.hash(password, 10);
     }
 
-    const updatedUser = await User.findByIdAndUpdate(
-      req.user._id,
-      updateData,
-      { new: true }
-    ).select("-password");
+    const updatedUser = await User.findByIdAndUpdate(req.user._id, updateData, {
+      new: true,
+    }).select("-password");
 
     // 🔹 Make sure image field is included
     res.status(200).json(updatedUser);
@@ -35,7 +33,5 @@ const updateMyProfile = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
-
 
 module.exports = { getMyProfile, updateMyProfile };
