@@ -6,7 +6,7 @@ const {
   updateMyProfile,
 } = require("../controller/profileController");
 const authtoken = require("../middleware/authMiddleware");
-const upload = require("../middleware/multerMiddleware");
+const upload = require("../middleware/upload");
 
 
 router.get("/me", authtoken, getMyProfile);

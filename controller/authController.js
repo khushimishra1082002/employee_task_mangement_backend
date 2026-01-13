@@ -1,46 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
-const connectDB = require("../config/db")
-
-// const registerController = async (req, res) => {
-//   try {
-//     await connectDB();
-//     const { name, email, password, role } = req.body;
-
-//     const existingUser = await User.findOne({ email });
-//     if (existingUser) {
-//       return res.status(400).json({ message: "User already exists" });
-//     }
-
-//    const image = req.file ? req.file.filename : undefined;
-
-//     const hashedPassword = await bcrypt.hash(password, 10);
-
-//     const user = await User.create({
-//       name,
-//       email,
-//       password : hashedPassword,
-//       role,
-//       image, // ✅ image saved
-//     });
-
-//     res.status(201).json({
-//       success: true,
-//       message: "User registered",
-//       id: user._id,
-//       name: user.name,
-//       email: user.email,
-//       role: user.role,
-//       image: user.image,
-//     });
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
-
-
-// LOGIN
+const connectDB = require("../config/db");
 
 const registerController = async (req, res) => {
   try {
@@ -82,13 +43,11 @@ const registerController = async (req, res) => {
   }
 };
 
-
-
 const loginController = async (req, res) => {
   console.log("jj");
-  
+
   try {
-    await connectDB(); 
+    await connectDB();
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -169,9 +128,8 @@ const changePasswordController = async (req, res) => {
   }
 };
 
-
 module.exports = {
   registerController,
   loginController,
-  changePasswordController
+  changePasswordController,
 };

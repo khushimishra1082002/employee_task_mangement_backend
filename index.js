@@ -34,6 +34,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/admin/authRoutes");
+const profileRoutes = require("./routes/profileRoutes");
 
 const app = express();
 
@@ -41,6 +42,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/profile", profileRoutes);
 
 app.use("/api", require("./routes/upload"));
 
@@ -50,8 +52,9 @@ app.get("/", (req, res) => {
 });
 
 // DB connect
-mongoose.connect(process.env.MONGO_URI)
+mongoose
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
-  .catch(err => console.log(err.message));
+  .catch((err) => console.log(err.message));
 
 module.exports = app; // 🔥 MUST
