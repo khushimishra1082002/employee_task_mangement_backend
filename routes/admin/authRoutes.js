@@ -21,8 +21,15 @@
 
 const express = require("express");
 const router = express.Router();
-const { loginController } = require("../../controller/authController");
+const {
+  loginController,
+  registerController,
+} = require("../../controller/authController");
 const connectDB = require("../../config/db");
+const upload = require("../../middleware/upload"); // ye Cloudinary middleware
+
+
+router.post("/register", upload.single("image"), registerController);
 
 router.post("/login", loginController);
 

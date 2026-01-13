@@ -3,25 +3,69 @@ const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const connectDB = require("../config/db")
 
+// const registerController = async (req, res) => {
+//   try {
+//     await connectDB();
+//     const { name, email, password, role } = req.body;
+
+//     const existingUser = await User.findOne({ email });
+//     if (existingUser) {
+//       return res.status(400).json({ message: "User already exists" });
+//     }
+
+//    const image = req.file ? req.file.filename : undefined;
+
+//     const hashedPassword = await bcrypt.hash(password, 10);
+
+//     const user = await User.create({
+//       name,
+//       email,
+//       password : hashedPassword,
+//       role,
+//       image, // ✅ image saved
+//     });
+
+//     res.status(201).json({
+//       success: true,
+//       message: "User registered",
+//       id: user._id,
+//       name: user.name,
+//       email: user.email,
+//       role: user.role,
+//       image: user.image,
+//     });
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+
+
+// LOGIN
+
 const registerController = async (req, res) => {
   try {
+    await connectDB();
     const { name, email, password, role } = req.body;
 
+    // check if user exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
 
-   const image = req.file ? req.file.filename : undefined;
+    // Cloudinary image URL
+    const image = req.file ? req.file.path : undefined;
 
+    // hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // create user
     const user = await User.create({
       name,
       email,
-      password : hashedPassword,
+      password: hashedPassword,
       role,
-      image, // ✅ image saved
+      image, // Cloudinary URL
     });
 
     res.status(201).json({
@@ -39,7 +83,7 @@ const registerController = async (req, res) => {
 };
 
 
-// LOGIN
+
 const loginController = async (req, res) => {
   console.log("jj");
   
