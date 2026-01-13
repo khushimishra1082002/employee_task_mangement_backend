@@ -23,15 +23,19 @@ const express = require("express");
 const router = express.Router();
 const {
   loginController,
-  registerController,
+  registerController,changePasswordController
 } = require("../../controller/authController");
 const connectDB = require("../../config/db");
 const upload = require("../../middleware/upload"); // ye Cloudinary middleware
+const authtoken = require("../../middleware/authMiddleware");
 
 
 router.post("/register", upload.single("image"), registerController);
 
 router.post("/login", loginController);
+
+router.post("/change-password", authtoken, changePasswordController);
+
 
 router.get("/test", (req, res) => {
   res.send("Auth route working");
