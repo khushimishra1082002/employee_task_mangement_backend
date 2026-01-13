@@ -42,6 +42,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 
+app.use("/api", require("./routes/upload"));
 
 // test route
 app.get("/", (req, res) => {
