@@ -22,11 +22,22 @@
 const express = require("express");
 const router = express.Router();
 const { loginController } = require("../../controller/authController");
+const connectDB = require("../../config/db")
 
 router.post("/login", loginController);
 
 router.get("/test", (req, res) => {
   res.send("Auth route working");
 });
+
+router.get("/db-test", async (req, res) => {
+  try {
+    await connectDB();
+    res.send("DB OK");
+  } catch (e) {
+    res.status(500).send("DB FAIL");
+  }
+});
+
 
 module.exports = router;
