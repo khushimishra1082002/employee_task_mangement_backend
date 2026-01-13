@@ -35,6 +35,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/admin/authRoutes");
 const profileRoutes = require("./routes/profileRoutes");
+const taskRoutes = require("./routes/admin/taskRoutes");
 
 const app = express();
 
@@ -43,6 +44,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
+app.use("/api/task", taskRoutes);
 
 app.use("/api", require("./routes/upload"));
 
