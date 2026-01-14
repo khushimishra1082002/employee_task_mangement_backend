@@ -1,16 +1,12 @@
 const Task = require("../models/task");
 
-// Get all tasks assigned to the logged-in employee
 const getMyTasksController = async (req, res) => {
-    console.log("k",req);
-    
   try {
-    // req.user._id comes from auth middleware (logged-in employee)
     const employeeId = req.user._id;
 
     const tasks = await Task.find({ assigned_to: employeeId })
-      .populate("assigned_to", "name email") // optional: populate employee info
-      .sort({ createdAt: -1 }); // latest first
+      .populate("assigned_to", "name email")
+      .sort({ createdAt: -1 });
 
     res.status(200).json({
       total: tasks.length,
@@ -25,17 +21,15 @@ const getMyTasksController = async (req, res) => {
   }
 };
 
-
 const employeeUpdateTaskStatusController = async (req, res) => {
   try {
-    const { id } = req.params; // Task ID
-    const { status } = req.body; // New status
+    const { id } = req.params;
+    const { status } = req.body;
 
-    // Update only status field
     const updatedTask = await Task.findByIdAndUpdate(
       id,
       { status },
-      { new: true } // updated task return karega
+      { new: true }
     );
 
     if (!updatedTask) {
@@ -51,4 +45,4 @@ const employeeUpdateTaskStatusController = async (req, res) => {
   }
 };
 
-module.exports = { getMyTasksController,employeeUpdateTaskStatusController }
+module.exports = { getMyTasksController, employeeUpdateTaskStatusController };

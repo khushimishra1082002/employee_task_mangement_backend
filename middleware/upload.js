@@ -5,7 +5,7 @@ const cloudinary = require("../config/cloudinary");
 const storage = new CloudinaryStorage({
   cloudinary,
   params: {
-    folder: "uploads", // Cloudinary folder name
+    folder: "uploads", 
     allowed_formats: ["jpg", "jpeg", "png", "pdf"],
   },
 });
@@ -13,7 +13,7 @@ const storage = new CloudinaryStorage({
 const upload = multer({
   storage,
   limits: {
-    fileSize: 5 * 1024 * 1024, // 5MB
+    fileSize: 5 * 1024 * 1024, 
   },
 });
 

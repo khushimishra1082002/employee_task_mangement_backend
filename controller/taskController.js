@@ -42,7 +42,6 @@ const assignTaskController = async (req, res) => {
   }
 };
 
-
 const getSingleTaskController = async (req, res) => {
   try {
     const { id } = req.params;
@@ -62,7 +61,6 @@ const getSingleTaskController = async (req, res) => {
   }
 };
 
-
 const updatetaskController = async (req, res) => {
   try {
     const { id } = req.params;
@@ -71,7 +69,7 @@ const updatetaskController = async (req, res) => {
     const updatedTask = await Task.findByIdAndUpdate(
       id,
       { title, description, status },
-      { new: true } // updated data return karega
+      { new: true }
     );
 
     if (!updatedTask) {
@@ -91,12 +89,10 @@ const updatetaskController = async (req, res) => {
   }
 };
 
-
 const deleteTaskController = async (req, res) => {
   try {
     const { id } = req.params;
 
-    // Task delete kar rahe hain
     const deletedTask = await Task.findByIdAndDelete(id);
 
     if (!deletedTask) {
@@ -112,6 +108,10 @@ const deleteTaskController = async (req, res) => {
   }
 };
 
-
-module.exports = { getAllTasksController ,assignTaskController,
-  getSingleTaskController,updatetaskController,deleteTaskController};
+module.exports = {
+  getAllTasksController,
+  assignTaskController,
+  getSingleTaskController,
+  updatetaskController,
+  deleteTaskController,
+};

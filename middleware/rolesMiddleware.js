@@ -1,15 +1,14 @@
 const authorise = (roles = []) => {
   return (req, res, next) => {
-    // safety check
     if (!req.user || !req.user.role) {
       return res.status(401).json({
-        message: "Unauthorized: user data missing"
+        message: "Unauthorized: user data missing",
       });
     }
 
     if (!roles.includes(req.user.role)) {
       return res.status(403).json({
-        message: "Access forbidden: insufficient permissions"
+        message: "Access forbidden: insufficient permissions",
       });
     }
 

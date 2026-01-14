@@ -3,18 +3,15 @@ const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const connectDB = require("../config/db");
 
-const registerController = async (req, res) => {                                                 
+const registerController = async (req, res) => {
   try {
     await connectDB();
     const { name, email, password, role } = req.body;
-
-    // check if user exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    // Cloudinary image URL
     const image = req.file ? req.file.path : undefined;
 
     // hash password
@@ -26,7 +23,7 @@ const registerController = async (req, res) => {
       email,
       password: hashedPassword,
       role,
-      image, // Cloudinary URL
+      image,
     });
 
     res.status(201).json({
@@ -44,8 +41,6 @@ const registerController = async (req, res) => {
 };
 
 const loginController = async (req, res) => {
-  console.log("jj");
-
   try {
     await connectDB();
     const { email, password } = req.body;
@@ -56,19 +51,16 @@ const loginController = async (req, res) => {
       });
     }
 
-    // ✅ 1. Find user first
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({ message: "User not found" });
     }
 
-    // ✅ 2. Compare hashed password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // ✅ 3. Generate token
     const token = jwt.sign(
       {
         id: user._id,
@@ -93,7 +85,7 @@ const loginController = async (req, res) => {
 
 const changePasswordController = async (req, res) => {
   try {
-    const userId = req.user._id; // from authtoken
+    const userId = req.user._id;
     const { currentPassword, newPassword } = req.body;
 
     if (!currentPassword || !newPassword) {
@@ -107,7 +99,6 @@ const changePasswordController = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // 🔐 verify old password
     const isMatch = await bcrypt.compare(currentPassword, user.password);
     if (!isMatch) {
       return res.status(400).json({
@@ -115,7 +106,6 @@ const changePasswordController = async (req, res) => {
       });
     }
 
-    // 🔐 hash new password
     user.password = await bcrypt.hash(newPassword, 10);
     await user.save();
 

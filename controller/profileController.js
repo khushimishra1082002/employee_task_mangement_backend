@@ -1,9 +1,8 @@
-// controllers/userController.js
 const User = require("../models/user");
 
 const getMyProfile = async (req, res) => {
   try {
-    console.log("req.user:", req.user); // Debug
+    console.log("req.user:", req.user);
     const user = await User.findById(req.user._id).select("-password");
     res.status(200).json(user);
   } catch (error) {
@@ -27,7 +26,6 @@ const updateMyProfile = async (req, res) => {
       new: true,
     }).select("-password");
 
-    // 🔹 Make sure image field is included
     res.status(200).json(updatedUser);
   } catch (error) {
     res.status(500).json({ message: error.message });

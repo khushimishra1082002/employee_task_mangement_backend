@@ -36,7 +36,6 @@ const addUserController = async (req, res) => {
       });
     }
 
-  
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({
@@ -44,11 +43,10 @@ const addUserController = async (req, res) => {
       });
     }
 
-    
     const newUser = new User({
       name,
       email,
-      password, 
+      password,
       role: role || "employee",
     });
 
@@ -62,7 +60,6 @@ const addUserController = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
 
 const deleteUserController = async (req, res) => {
   try {
@@ -126,7 +123,6 @@ const uploadproof = async (req, res) => {
   }
 };
 
-// Get users by role (employee / admin / subadmin)
 const getUsersByRole = async (req, res) => {
   try {
     const { role } = req.query;
@@ -157,7 +153,6 @@ const changeUserRoleController = async (req, res) => {
       return res.status(400).json({ message: "Invalid role" });
     }
 
-    // Prevent self role downgrade (optional)
     if (req.user._id.toString() === userId) {
       return res
         .status(403)
@@ -183,7 +178,6 @@ const changeUserRoleController = async (req, res) => {
   }
 };
 
-
 module.exports = {
   getAllUsersController,
   getSingleUser,
@@ -191,5 +185,6 @@ module.exports = {
   deleteUserController,
   updateuser,
   uploadproof,
-  getUsersByRole,changeUserRoleController
+  getUsersByRole,
+  changeUserRoleController,
 };
