@@ -1,5 +1,7 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+
 
 const getAllUsersController = async (req, res) => {
   try {
@@ -43,23 +45,31 @@ const addUserController = async (req, res) => {
       });
     }
 
-    const newUser = new User({
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = await User.create({
       name,
       email,
-      password,
+      password: hashedPassword, 
       role: role || "employee",
     });
 
-    await newUser.save();
-
     res.status(201).json({
-      message: "User created successfully",
-      user: newUser,
+      success: true,
+      message: "User created successfully by admin",
+      user: {
+        id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+        role: newUser.role,
+      },
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 const deleteUserController = async (req, res) => {
   try {
