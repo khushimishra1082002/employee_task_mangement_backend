@@ -5,6 +5,7 @@ const authRoutes = require("./routes/admin/authRoutes");
 const userRoutes = require("./routes/admin/userRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 const taskRoutes = require("./routes/admin/taskRoutes");
+const employeeRoutes = require("./routes/employee/employeeRoutes");
 
 const app = express();
 
@@ -13,9 +14,9 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
-
 app.use("/api/profile", profileRoutes);
 app.use("/api/task", taskRoutes);
+app.use("/api/employee", employeeRoutes);
 
 app.use("/api", require("./routes/upload"));
 
@@ -30,4 +31,4 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err.message));
 
-module.exports = app; 
+module.exports = app;
