@@ -6,6 +6,11 @@ const userRoutes = require("./routes/admin/userRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 const taskRoutes = require("./routes/admin/taskRoutes");
 const employeeRoutes = require("./routes/employee/employeeRoutes");
+const dns = require(
+  "dns"
+)
+
+dns.setServers(["1.1.1.1", "8.8.8.8"])
 
 const app = express();
 
